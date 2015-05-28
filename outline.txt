@@ -1,0 +1,34 @@
+Solar System Simulation
+-----------------------
+Goals:
+	- Simulate general solar systems
+	- Start with just star and planets
+	- n-body simulation
+	- We want animations!
+
+Tools:
+	- git
+	- python 
+		- numpy, scipy, etc...
+		- pygame
+		- try to follow Google Style Guide
+
+Immediate Tasks:
+	- Look into different methods of doing n-body simulations
+		- Trees
+		- Particle Mesh
+
+Design:
+	- Input:
+		- Store bodies as JSON files
+		- Have code to compute important properties based on simpler input
+
+	- Simulation:
+		- Progress forward in time from start
+		- Try to incorporate relativistic effects
+		- Calculate forces, acceleration, velocity, positions at timesteps
+			- Verlet method for integration
+
+	- Graphics:
+		- ???
+		- Profit!
