@@ -1,7 +1,11 @@
+# Run this script to generate a blank json input file in folder "input_files".
+
 import json
 from os import path
 
 def create_body_template():
+    """Creates a blank JSON template for a generic celestial body."""
+
     template_file = open(path.join("input_data", "body_template.json"), 'w')
     properties = {'name': "planet",
                   'mass': 0.0, 
