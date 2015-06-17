@@ -12,7 +12,9 @@ def create_body_template():
                   'mass': 0.0, 
                   'semimajor': 0.0, 
                   'eccentricity': 0.0,
-                  'azimuthal_angle': 0.0,
+                  'ascending_node_longitude': 0.0,
+                  'inclination': 0.0,
+                  'argument_of_periapsis': 0.0,
                   'direction': "CW",
                   'start': "periapsis"}
 
@@ -22,4 +24,6 @@ def create_body_template():
     template_file.write(properties_json)
     template_file.close()
 
-create_body_template()
+
+if __name__ == "__main__":
+    create_body_template()
