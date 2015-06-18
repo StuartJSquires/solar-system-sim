@@ -5,6 +5,7 @@ def ascii_encode_dict(data):
     ascii_encode = lambda x: x.encode('ascii') if isinstance(x, unicode) else x
     return dict(map(ascii_encode, pair) for pair in data.items())
 
+
 def read_body(filename):
     """Reads the body information from a file in input_data and creates a 
     dictionary.
@@ -23,4 +24,21 @@ def read_body(filename):
 
     return body_info
 
-print read_body("body_template.json")
+
+def import_system(system_name):
+    """Reads in all the bodies from a system folder and returns them as a list.
+
+    Args:
+        system_name: the folder name for the system (in input_data)
+
+    Returns:
+        bodies: a dictionary containing all the bodies in the system
+    """
+
+    bodies = {}
+
+    directory = os.path.join("input_data", system_name)
+
+    for subdir, dirs, files in os.walk(directory):
+    for file in files:
+        filepath = subdir + os.sep + file
