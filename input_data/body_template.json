@@ -1,7 +1,12 @@
 {
-    "azimuthal_angle": 0.0,
+    "argument_of_periapsis": 0.0,
+    "ascending_node_longitude": 0.0,
+    "direction": "CW",
     "eccentricity": 0.0,
+    "inclination": 0.0,
     "mass": 0.0,
     "name": "planet",
-    "semimajor": 0.0
+    "parent": null,
+    "semimajor": 0.0,
+    "start": "periapsis"
 }
