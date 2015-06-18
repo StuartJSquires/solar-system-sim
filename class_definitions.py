@@ -37,8 +37,10 @@ class Body(object):
         else:
             if self.start == "periapsis":
                 velocity_magnitude = np.sqrt(((1 + eccentricity) * G * M) / ((1 - e) * a)
+                position_magnitude = semimajor * (1 - eccentricity)
             else if self.start == "apoapsis":
                 velocity_magnitude = np.sqrt(((1 - eccentricity) * G * M) / ((1 + e) * a)
+                position_magnitude = semimajor * (1 + eccentricity)
             else:
                 print "FATAL ERROR: INVALID START POSITION FOR", self.name
                 sys.exit("Stopping program.")
