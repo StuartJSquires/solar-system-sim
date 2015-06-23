@@ -1,5 +1,6 @@
 from read_input import read_body
 import numpy as np
+import os
 
 
 class Body(object):
@@ -28,7 +29,7 @@ class Body(object):
         self.parent = body_params["parent"]
         self.mass = body_params["mass"]
 
-        if self.parent not None:
+        if self.parent is not None:
             self.semimajor = body_params["semimajor"]
             self.eccentricity = body_params["eccentricity"]
             self.argument_of_periapsis = body_params["argument_of_periapsis"]
@@ -45,58 +46,58 @@ class Body(object):
             e = self.eccentricity
 
             if self.start == "periapsis":
-                velocity_magnitude = np.sqrt(((1 + e) * G * M) / ((1 - e) * a)
-                position_magnitude = semimajor * (1 - e)
-            else if self.start == "apoapsis":
-                velocity_magnitude = np.sqrt(((1 - e) * G * M) / ((1 + e) * a)
-                position_magnitude = semimajor * (1 + e)
+                velocity_magnitude = np.sqrt(((1 + e) * G * M) / ((1 - e) * a))
+                position_magnitude = a * (1 - e)
+            elif self.start == "apoapsis":
+                velocity_magnitude = np.sqrt(((1 - e) * G * M) / ((1 + e) * a))
+                position_magnitude = a * (1 + e)
             else:
                 print "FATAL ERROR: INVALID START POSITION FOR", self.name
                 sys.exit("Stopping program.")
 
-			angle_1 = self.ascending_node_longitude
-			angle_2 = self.inclination
-			angle_3 = self.argument_of_periapsis
+            angle_1 = self.ascending_node_longitude
+            angle_2 = self.inclination
+            angle_3 = self.argument_of_periapsis
 
-			position_x_direction = ((np.cos(angle_1) * 
-									 np.cos(angle_2) * 
-									 np.cos(angle_3)) - 
-									(np.sin(angle_1) * 
-									 np.sin(angle_2))
+            position_x_direction = ((np.cos(angle_1) * 
+            						 np.cos(angle_2) * 
+            						 np.cos(angle_3)) - 
+            						(np.sin(angle_1) * 
+            						 np.sin(angle_2)))
 
-			position_y_direction = ((np.cos(angle_1) * 
-									 np.sin(angle_3)) +
-									(np.cos(angle_2) *
-									 np.cos(angle_3) *
-									 np.sin(angle_1)))
+            position_y_direction = ((np.cos(angle_1) * 
+            						 np.sin(angle_3)) +
+            						(np.cos(angle_2) *
+            						 np.cos(angle_3) *
+            						 np.sin(angle_1)))
 
-			position_z_direction = np.cos(angle_3) * np.sin(angle_2)
+            position_z_direction = np.cos(angle_3) * np.sin(angle_2)
 
-			position_direction = np.asarray([position_x_direction,
-											 position_y_direction,
-											 position_z_direction])
+            position_direction = np.asarray([position_x_direction,
+            								 position_y_direction,
+            								 position_z_direction])
 
-			self.position = position_magnitude * position_direction
+            self.position = position_magnitude * position_direction
 
-			velocity_x_direction = (-(np.cos(angle_3) * 
-									  np.sin(angle_1)) -
-									(np.cos(angle_1) *
-									 np.cos(angle_2) *
-									 np.sin(angle_3)))
+            velocity_x_direction = (-(np.cos(angle_3) * 
+            						  np.sin(angle_1)) -
+            						(np.cos(angle_1) *
+            						 np.cos(angle_2) *
+            						 np.sin(angle_3)))
 
-			velocity_y_direction = ((np.cos(angle_1) * 
-									 np.cos(angle_3)) -
-									 np.cos(angle_2) * 
-									 np.sin(angle_1) *
-									 np.sin(angle_3))
+            velocity_y_direction = ((np.cos(angle_1) * 
+            						 np.cos(angle_3)) -
+            						 np.cos(angle_2) * 
+            						 np.sin(angle_1) *
+            						 np.sin(angle_3))
 
-			velocity_z_direction = -np.sin(angle_2) * np.sin(angle_3)
+            velocity_z_direction = -np.sin(angle_2) * np.sin(angle_3)
 
-			velocity_direction = np.asarray([velocity_x_direction,
-											 velocity_y_direction,
-											 velocity_z_direction])
+            velocity_direction = np.asarray([velocity_x_direction,
+            								 velocity_y_direction,
+            								 velocity_z_direction])
 
-			self.velocity = velocity_magnitude * position_magnitude
+            self.velocity = velocity_magnitude * position_magnitude
 
 
 class System():
@@ -110,4 +111,5 @@ class System():
         members = []
 
         for filename in os.listdir(directory_name):
-            members.append(filename, **params)
+            file_path = os.path.join(directory_name, filename)
+            members.append(Body(file_path, **params))

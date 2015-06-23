@@ -1,6 +1,6 @@
 # Relevant files
 
-INITIAL_CONDITION_DIRECTORY = "input_data"
+INITIAL_CONDITION_DIRECTORY = "our_solar_system"
 OUTPUT_DIRECTORY = "output_directory"
 OUTPUT_FILE_BASE = "snapshot"
 
