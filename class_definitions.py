@@ -54,49 +54,49 @@ class Body(object):
                 print "FATAL ERROR: INVALID START POSITION FOR", self.name
                 sys.exit("Stopping program.")
 
-                angle_1 = self.ascending_node_longitude
-                angle_2 = self.inclination
-                angle_3 = self.argument_of_periapsis
+			angle_1 = self.ascending_node_longitude
+			angle_2 = self.inclination
+			angle_3 = self.argument_of_periapsis
 
-                position_x_direction = ((np.cos(angle_1) * 
-                                         np.cos(angle_2) * 
-                                         np.cos(angle_3)) - 
-                                        (np.sin(angle_1) * 
-                                         np.sin(angle_2))
+			position_x_direction = ((np.cos(angle_1) * 
+									 np.cos(angle_2) * 
+									 np.cos(angle_3)) - 
+									(np.sin(angle_1) * 
+									 np.sin(angle_2))
 
-                position_y_direction = ((np.cos(angle_1) * 
-                                         np.sin(angle_3)) +
-                                        (np.cos(angle_2) *
-                                         np.cos(angle_3) *
-                                         np.sin(angle_1)))
+			position_y_direction = ((np.cos(angle_1) * 
+									 np.sin(angle_3)) +
+									(np.cos(angle_2) *
+									 np.cos(angle_3) *
+									 np.sin(angle_1)))
 
-                position_z_direction = np.cos(angle_3) * np.sin(angle_2)
+			position_z_direction = np.cos(angle_3) * np.sin(angle_2)
 
-                position_direction = np.asarray([position_x_direction,
-                                                 position_y_direction,
-                                                 position_z_direction])
+			position_direction = np.asarray([position_x_direction,
+											 position_y_direction,
+											 position_z_direction])
 
-                self.position = position_magnitude * position_direction
+			self.position = position_magnitude * position_direction
 
-                velocity_x_direction = (-(np.cos(angle_3) * 
-                                          np.sin(angle_1)) -
-                                        (np.cos(angle_1) *
-                                         np.cos(angle_2) *
-                                         np.sin(angle_3)))
+			velocity_x_direction = (-(np.cos(angle_3) * 
+									  np.sin(angle_1)) -
+									(np.cos(angle_1) *
+									 np.cos(angle_2) *
+									 np.sin(angle_3)))
 
-                velocity_y_direction = ((np.cos(angle_1) * 
-                                         np.cos(angle_3)) -
-                                         np.cos(angle_2) * 
-                                         np.sin(angle_1) *
-                                         np.sin(angle_3))
+			velocity_y_direction = ((np.cos(angle_1) * 
+									 np.cos(angle_3)) -
+									 np.cos(angle_2) * 
+									 np.sin(angle_1) *
+									 np.sin(angle_3))
 
-                velocity_z_direction = -np.sin(angle_2) * np.sin(angle_3)
+			velocity_z_direction = -np.sin(angle_2) * np.sin(angle_3)
 
-                velocity_direction = np.asarray([velocity_x_direction,
-                                                 velocity_y_direction,
-                                                 velocity_z_direction])
+			velocity_direction = np.asarray([velocity_x_direction,
+											 velocity_y_direction,
+											 velocity_z_direction])
 
-                self.velocity = velocity_magnitude * position_magnitude
+			self.velocity = velocity_magnitude * position_magnitude
 
 
 class System():
