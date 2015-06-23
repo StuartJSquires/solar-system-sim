@@ -97,3 +97,17 @@ class Body(object):
                                                  velocity_z_direction])
 
                 self.velocity = velocity_magnitude * position_magnitude
+
+
+class System():
+    """A system is a collection of bodies/subsystems.
+
+    Attributes:
+        members: the list of members of the system
+    """
+
+    def __init__(self, directory_name, **params):
+        members = []
+
+        for filename in os.listdir(directory_name):
+            members.append(filename, **params)
