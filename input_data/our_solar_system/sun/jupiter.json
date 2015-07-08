@@ -1,0 +1,12 @@
+{
+    "argument_of_periapsis": 0.0,
+    "ascending_node_longitude": 0.0,
+    "direction": "CW",
+    "eccentricity": 0.048775,
+    "inclination": 0.0,
+    "mass": 1.8986E27,
+    "name": "jupiter",
+    "parent": "sun",
+    "semimajor": 778547200E3,
+    "start": "periapsis"
+}

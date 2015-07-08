@@ -1,0 +1,12 @@
+{
+    "argument_of_periapsis": 0.0,
+    "ascending_node_longitude": 0.0,
+    "direction": "CW",
+    "eccentricity": 0.01671123,
+    "inclination": 0.0,
+    "mass": 5.97219E24,
+    "name": "earth",
+    "parent": "sun",
+    "semimajor": 149598261E3,
+    "start": "periapsis"
+}

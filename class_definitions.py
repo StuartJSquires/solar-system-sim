@@ -14,7 +14,7 @@ class Body(object):
         mass: the mass of the body
     """
 
-    def __init__(self, filename, **params):
+    def __init__(self, filename, directory_name, parent = None, **params):
         """This function takes the list of body parameters from the input files
         and uses them to create the body object with appropriate attributes.
 
@@ -22,14 +22,19 @@ class Body(object):
             filename: the name of the input file to use to create the body
         """
 
+        # Get the gravitational constant
         G = params["GRAVITATIONAL_CONSTANT"]
-        body_params = read_body(filename)
+
+        # Read in the body params
+        file_path = os.path.join(directory_name, filename)
+        body_params = read_body(file_path)
 
         self.name = body_params["name"]
-        self.parent = body_params["parent"]
+        self.parent_name = body_params["parent"] # Note this doesn't do anything
         self.mass = body_params["mass"]
 
-        if self.parent is not None:
+        # Set these parameters only if the body isn't the top level
+        if parent is not None:
             self.semimajor = body_params["semimajor"]
             self.eccentricity = body_params["eccentricity"]
             self.argument_of_periapsis = body_params["argument_of_periapsis"]
@@ -38,13 +43,17 @@ class Body(object):
             self.direction = body_params["direction"]
             self.start = body_params["start"]
 
-        if self.parent == None:
+        # If the body is the top level, it's the origin!
+        if parent == None:
             self.velocity = np.zeros(3)
             self.position = np.zeros(3)
-        else:
+        else: # Otherwise, we need to initialize the position and velocity
+            # These are for shorthand
             a = self.semimajor
             e = self.eccentricity
+            M = parent.mass
 
+            # Get the magnitude of the position and velocity
             if self.start == "periapsis":
                 velocity_magnitude = np.sqrt(((1 + e) * G * M) / ((1 - e) * a))
                 position_magnitude = a * (1 - e)
@@ -55,10 +64,13 @@ class Body(object):
                 print "FATAL ERROR: INVALID START POSITION FOR", self.name
                 sys.exit("Stopping program.")
 
+            # Get angles for rotation transformation
             angle_1 = self.ascending_node_longitude
             angle_2 = self.inclination
             angle_3 = self.argument_of_periapsis
 
+            # Calculate the direction vectors. Hopefully they're unit vectors... 
+            # I hope I didn't make a mistake down here! 
             position_x_direction = ((np.cos(angle_1) * 
             						 np.cos(angle_2) * 
             						 np.cos(angle_3)) - 
@@ -77,7 +89,9 @@ class Body(object):
             								 position_y_direction,
             								 position_z_direction])
 
-            self.position = position_magnitude * position_direction
+            # Create position array
+            self.position = (position_magnitude * position_direction + 
+                             parent.position)
 
             velocity_x_direction = (-(np.cos(angle_3) * 
             						  np.sin(angle_1)) -
@@ -97,7 +111,38 @@ class Body(object):
             								 velocity_y_direction,
             								 velocity_z_direction])
 
-            self.velocity = velocity_magnitude * position_magnitude
+            # Create velocity array
+            self.velocity = (velocity_magnitude * position_magnitude +
+                             parent.velocity)
+
+        # Read in children
+        self.children = self.__init_children(directory_name, **params)
+
+
+    def __init_children(self, directory_name, **params):
+        # Get path to children folder
+        full_directory_name = os.path.join(directory_name, self.name)
+
+        # Check if children folder exists
+        if os.path.isdir(full_directory_name):
+            # Init children list
+            children = []
+
+            # Walk self.children directory
+            path, dirs, files = os.walk(full_directory_name).next()
+
+            if len(files) > 0:
+                for filename in files:
+                    children.append(Body(filename, full_directory_name, 
+                                         self, **params))
+
+                return children
+            else:
+                print "Directory", full_directory_name, "contains no files."
+                return None
+
+        else:
+            return None
 
 
 class System():
@@ -108,8 +153,20 @@ class System():
     """
 
     def __init__(self, directory_name, **params):
-        members = []
+        """This function should initialize a system given its directory name.
+        """
 
-        for filename in os.listdir(directory_name):
-            file_path = os.path.join(directory_name, filename)
-            members.append(Body(file_path, **params))
+        # Initialize the top level body list
+        self.members = []
+
+        # Walk top directory
+        full_directory_name = os.path.join("input_data", directory_name)
+        path, dirs, files = os.walk(full_directory_name).next()
+
+        # Make sure there is only one star!
+        if len(files) == 1 and len(dirs) == 1:
+            self.members.append(Body(files[0], full_directory_name, 
+                                parent = None, **params))
+        else:
+            print "Invalid number of stars or folder structure."
+            sys.exit()
