@@ -1,4 +1,6 @@
 from read_input import read_body
+
+from itertools import chain, imap
 import numpy as np
 import os
 
@@ -112,7 +114,7 @@ class Body(object):
             								 velocity_z_direction])
 
             # Create velocity array
-            self.velocity = (velocity_magnitude * position_magnitude +
+            self.velocity = (velocity_magnitude * velocity_direction +
                              parent.velocity)
 
         # Read in children
@@ -145,6 +147,17 @@ class Body(object):
             return None
 
 
+    def __iter__(self):
+        """Implement the iterator protocol.
+        """
+        if self.children is not None:
+            for body in chain(*imap(iter, self.children)):
+                yield body
+
+        yield self
+
+
+
 class System():
     """A system is a collection of bodies/subsystems.
 
@@ -155,6 +168,9 @@ class System():
     def __init__(self, directory_name, **params):
         """This function should initialize a system given its directory name.
         """
+
+        # Initialize the time
+        self.time = params['BEGIN_TIME']
 
         # Initialize the top level body list
         self.members = []
@@ -170,3 +186,45 @@ class System():
         else:
             print "Invalid number of stars or folder structure."
             sys.exit()
+
+
+    def __iter__(self):
+        """Implement the iterator protocol
+        """
+        for body in chain(*imap(iter, self.members)):
+            yield body
+    
+
+    def step(self, timestep, **params):
+        """This function updates the system over a timestep using numerical 
+        integration.
+        """
+        if params["INTEGRATOR"] == 'verlet':
+            self.__verlet_step(timestep, **params)
+
+        self.time += timestep
+
+
+    def __verlet_step(self, timestep, **params):
+        """
+
+        """
+        G = params['GRAVITATIONAL_CONSTANT']
+
+        for body in list(iter(self)):
+            body.position += body.velocity * timestep / 2.0
+
+        for body in list(iter(self)):
+            body.sum_of_accelerations = 0.0
+
+            for interacting_body in list(iter(self)):
+                if interacting_body is not body:
+                    distance = body.position - interacting_body.position
+                    # print "Distance between", body.name, "and", interacting_body.name, "is", distance
+                    acceleration = -(G * interacting_body.mass * distance / 
+                                     (np.linalg.norm(distance) ** 3.0))
+                    body.sum_of_accelerations += acceleration
+
+        for body in list(iter(self)):
+            body.velocity += body.sum_of_accelerations * timestep
+            body.position += body.velocity * timestep / 2.0
