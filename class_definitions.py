@@ -215,7 +215,7 @@ class System():
             body.position += body.velocity * timestep / 2.0
 
         for body in list(iter(self)):
-            body.sum_of_accelerations = 0.0
+            body.sum_of_accelerations = np.zeros(3)
 
             for interacting_body in list(iter(self)):
                 if interacting_body is not body:
