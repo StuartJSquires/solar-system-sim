@@ -3,11 +3,15 @@ import pandas as pd
 
 
 
-def csv_write(dataframe):
-    dataframe.to_csv(csv_file_name, mode='w')
+def csv_write(file_name, dataframe):
+    """This function writes the initial dataframe to a csv file format.
+    """
+    dataframe.to_csv(file_name, mode='w')
 
 
 def csv_append(file_name, new_data):
+    """This function appends new dataframes to an existing csv file.
+    """
     with open(file_name, 'a') as f:
         new_data.to_csv(f, header=False)
 
@@ -35,7 +39,7 @@ def main():
     print initial_dataframe
     print
 
-    csv_write(initial_dataframe)
+    csv_write(csv_file_name, initial_dataframe)
 
     print 'Initial pandas DataFrame read from csv file'
     print pd.read_csv(csv_file_name, index_col=0)
