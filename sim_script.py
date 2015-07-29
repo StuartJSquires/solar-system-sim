@@ -1,9 +1,11 @@
 import sys
 import numpy as np
+import os
 
 from parameters import params
 from class_definitions import System
 from data_output import init_output, append_data
+from utility_functions import prep_dir
 
 def main():
     print "Initializing..."
@@ -21,6 +23,8 @@ def main():
     system = System(INITIAL_CONDITION_DIRECTORY, **params)
 
     snapshot_number = 0
+
+    prep_dir(os.path.join("output", OUTPUT_DIRECTORY, "data"))
 
     init_output(OUTPUT_DIRECTORY, system)
     last_output_time = 0.0
