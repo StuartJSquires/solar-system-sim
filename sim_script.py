@@ -43,12 +43,13 @@ def main():
             append_data(OUTPUT_DIRECTORY, system, snapshot_number)
             last_output_time = system.time
             
-        """ TODO
+        #TODO
         # Progress bar
-        if timestep >= last_progressbar_step + tenth:
-            sys.stdout.write("#")
-            last_progressbar_step = timestep
-        """
+        if system.time >= last_progressbar_step + tenth:
+            print system.time, "/", MAX_TIME
+            #sys.stdout.write("#")
+            last_progressbar_step = system.time
+        
 
     print "\n"
 

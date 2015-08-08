@@ -12,3 +12,10 @@ def prep_dir(pathway_address):
 
 	if status == False:
 		os.makedirs(pathway_address)
+
+def remove_file(f_path):
+    if os.path.isfile(f_path):
+        try:
+            os.unlink(f_path)
+        except Exception, e:
+            print e
