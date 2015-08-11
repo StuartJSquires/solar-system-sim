@@ -19,3 +19,9 @@ def remove_file(f_path):
             os.unlink(f_path)
         except Exception, e:
             print e
+
+def ensure_directory(pathway_address):
+    status = os.path.isdir(pathway_address)
+
+    if status == False:
+        os.makedirs(pathway_address)

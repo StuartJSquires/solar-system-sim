@@ -4,9 +4,10 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import os
 import subprocess
+import seaborn as sns
 
 from vid_parameters import params
-from utility_functions import prep_dir, remove_file
+from utility_functions import prep_dir, remove_file, ensure_dir
 
 
 def main():
@@ -14,6 +15,7 @@ def main():
     VID_NAME = params["VID_NAME"]
     SNAPSHOT_START = params["SNAPSHOT_START"]
     SNAPSHOT_END = params["SNAPSHOT_END"]
+    RESOLUTION = params["RESOLUTION"]
 
     prep_dir(os.path.join("output", SIM_NAME, "tmp"))
 
@@ -21,7 +23,13 @@ def main():
 
     # Initialize plot here
     limits = get_limits(dataframes)
-    (fig, ax) = init_plot(dataframes, limits)
+    (fig, ax) = init_plot(dataframes, limits, RESOLUTION)
+
+    tenth = (SNAPSHOT_END + 1 - SNAPSHOT_START) / 10
+
+    current_tenth = 0
+    
+    print "Drawing frames..."
 
     for snapshot in range(SNAPSHOT_START, SNAPSHOT_END + 1):
         # Update plot here
@@ -31,13 +39,32 @@ def main():
         filename = VID_NAME + "%04d.png" % snapshot
         fig.savefig(os.path.join("output", SIM_NAME, "tmp", filename), dpi=120)
 
+        if snapshot == (current_tenth + 1) * tenth:
+            current_tenth += 1
+            percent = str(current_tenth * 10) + "%"
+            print percent, "of frames finished drawing."
+
+    print "All frames finished drawing."
+            
+
+
     # Delete old mp4 if it exists
     remove_file(os.path.join("output", SIM_NAME, "video", VID_NAME + ".mp4"))
 
+    # Ensure the directory exists
+    ensure_dir(os.path.join("output", SIM_NAME, "video"))
+
+    print "\nCreating video from frames..."
+
     # Create mp4
-    create_video_from_frames(SIM_NAME, VID_NAME, fps=10)
+    create_video_from_frames(SIM_NAME, VID_NAME, fps=60)
+
+    print "\nClearing tmp directory..."
 
     # Clear snapshot directory
+    prep_dir(os.path.join("output", SIM_NAME, "tmp"))
+
+    print "Finished."
 
 
 def get_datapoints(dataframes, snapshot=0):
@@ -85,15 +112,20 @@ def get_limits(dataframes):
     return (x_lims, y_lims, z_lims)
 
 
-def init_plot(dataframes, limits):
+def init_plot(dataframes, limits, resolution):
     x_lims, y_lims, z_lims = limits
 
-    fig = plt.figure()
+    horizontal_size = resolution[0] / 120
+    vertical_size = resolution[1] / 120
+
+    fig = plt.figure(figsize = (horizontal_size, vertical_size))
     ax = fig.add_subplot(111, projection = '3d')
 
     xs, ys, zs = get_datapoints(dataframes)
 
     ax.scatter(xs, ys, zs)
+
+    ax.grid(b = False)
 
     ax.set_xlim(x_lims[0], x_lims[1])
     ax.set_ylim(y_lims[0], y_lims[1])
@@ -114,6 +146,8 @@ def update_plot(dataframes, fig, ax, limits, snapshot):
     xs, ys, zs = get_datapoints(dataframes, snapshot)
 
     ax.scatter(xs, ys, zs)
+
+    ax.grid(b = False)
 
     ax.set_xlim(x_lims[0], x_lims[1])
     ax.set_ylim(y_lims[0], y_lims[1])

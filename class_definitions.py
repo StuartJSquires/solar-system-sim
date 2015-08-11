@@ -67,9 +67,9 @@ class Body(object):
                 sys.exit("Stopping program.")
 
             # Get angles for rotation transformation
-            angle_1 = self.ascending_node_longitude
-            angle_2 = self.inclination
-            angle_3 = self.argument_of_periapsis
+            angle_1 = np.radians(self.ascending_node_longitude)
+            angle_2 = np.radians(self.inclination)
+            angle_3 = np.radians(self.argument_of_periapsis)
 
             # Calculate the direction vectors. Hopefully they're unit vectors... 
             # I hope I didn't make a mistake down here! 

@@ -46,8 +46,10 @@ def main():
         #TODO
         # Progress bar
         if system.time >= last_progressbar_step + tenth:
-            print system.time, "/", MAX_TIME
-            #sys.stdout.write("#")
+            percent_complete = system.time / MAX_TIME
+            percent_string = str(round(percent_complete * 100)) + "%"
+            print percent_string, "complete."
+            
             last_progressbar_step = system.time
         
 
