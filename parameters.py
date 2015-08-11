@@ -1,16 +1,16 @@
 # Relevant files
 
 INITIAL_CONDITION_DIRECTORY = "our_solar_system"
-OUTPUT_DIRECTORY = "our_solar_system"
+OUTPUT_DIRECTORY = "all_planet_plane_test"
 OUTPUT_FILE_BASE = "snapshot"
 
 
 # Run Characteristics
 
 BEGIN_TIME = 0.0
-MAX_TIME = 12 * 31556900.0
-MAX_TIME_STEP = 100.0
-OUTPUT_TIME_STEP = 105190.0
+MAX_TIME = (5.196859 * 10**9)
+MAX_TIME_STEP = 86400.0
+OUTPUT_TIME_STEP = 288714.39
 TIME_OF_FIRST_OUTPUT = 0.0
 
 
