@@ -1,0 +1,4 @@
+# References
+
+solar system planet parameters
+http://www.rschr.de/PRPDF/aprx_pos_planets.pdf
