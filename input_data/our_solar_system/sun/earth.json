@@ -3,7 +3,7 @@
     "ascending_node_longitude": 0.0,
     "direction": "CW",
     "eccentricity": 0.01671123,
-    "inclination": 0.0,
+    "inclination": -0.00054346,
     "mass": 5.97219E24,
     "name": "earth",
     "parent": "sun",

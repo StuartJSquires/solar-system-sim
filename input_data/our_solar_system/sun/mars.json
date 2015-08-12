@@ -3,7 +3,7 @@
     "ascending_node_longitude": 0.0,
     "direction": "CW",
     "eccentricity": 0.0935,
-    "inclination": 0.0,
+    "inclination": 1.85181869,
     "mass": 4.4185E23,
     "name": "mars",
     "parent": "sun",
