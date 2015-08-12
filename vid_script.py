@@ -84,7 +84,7 @@ def get_datapoints(dataframes, snapshot=0):
 
 
 def get_limits(dataframes):
-    x_lims, y_lims, z_lims = [0.0, 0.0], [0.0, 0.0], [0.06, 0.06]
+    x_lims, y_lims, z_lims = [0.0, 0.0], [0.0, 0.0], [0.0, 0.0]
 
     for name in dataframes:
         x_min = np.min(dataframes[name]['x_pos'])
@@ -129,7 +129,7 @@ def init_plot(dataframes, limits, resolution):
 
     ax.set_xlim(x_lims[0], x_lims[1])
     ax.set_ylim(y_lims[0], y_lims[1])
-    ax.set_zlim(-0.06, 0.06)
+    ax.set_zlim(z_lims[0], z_lims[1])
 
     ax.set_xlabel('x (m)')
     ax.set_ylabel('y (m)')
@@ -151,7 +151,7 @@ def update_plot(dataframes, fig, ax, limits, snapshot):
 
     ax.set_xlim(x_lims[0], x_lims[1])
     ax.set_ylim(y_lims[0], y_lims[1])
-    ax.set_zlim(-0.06, 0.06)
+    ax.set_zlim(z_lims[0], z_lims[1])
 
     return (fig, ax)
 
@@ -188,7 +188,7 @@ def create_video_from_frames(sim_name, vid_name, fps=60):
 
     command = "avconv -f image2 -r %s -i " % str(fps)
     command += "%s.png" % (os.path.join(tmp_directory, vid_name + "%04d"))
-    command += " -c:v libx264 -r 30 %s.mp4" % (os.path.join(output_directory, vid_name))
+    command += " -c:v libx264 -r 60 %s.mp4" % (os.path.join(output_directory, vid_name))
     print "Running command:"
     print command
     p = subprocess.Popen(command, shell=True, stdout = subprocess.PIPE, stderr=subprocess.STDOUT)
