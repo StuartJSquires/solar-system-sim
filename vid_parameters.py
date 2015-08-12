@@ -1,7 +1,7 @@
-SIM_NAME = "all_planet_plane_test"
-VID_NAME = "first_full_test"
+SIM_NAME = "inclination_test"
+VID_NAME = "inclination_test"
 SNAPSHOT_START = 0
-SNAPSHOT_END = 15036
+SNAPSHOT_END = 30096
 RESOLUTION = (1920, 1080)
 
 params = {"SIM_NAME": SIM_NAME,

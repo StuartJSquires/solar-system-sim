@@ -1,7 +1,7 @@
 # Relevant files
 
 INITIAL_CONDITION_DIRECTORY = "our_solar_system"
-OUTPUT_DIRECTORY = "all_planet_plane_test"
+OUTPUT_DIRECTORY = "inclination_test"
 OUTPUT_FILE_BASE = "snapshot"
 
 
@@ -9,9 +9,9 @@ OUTPUT_FILE_BASE = "snapshot"
 
 BEGIN_TIME = 0.0
 
-MAX_TIME = (5.196859 * 10**9)
+MAX_TIME = (5.2004186 * 10**9)
 MAX_TIME_STEP = 86400.0
-OUTPUT_TIME_STEP = 288714.39
+OUTPUT_TIME_STEP = 144456
 
 TIME_OF_FIRST_OUTPUT = 0.0
 
