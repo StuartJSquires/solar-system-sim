@@ -1,0 +1,12 @@
+{
+    "argument_of_periapsis": 0.0,
+    "ascending_node_longitude": 0.0,
+    "direction": "CW",
+    "eccentricity": 0.055723219,
+    "inclination": 0.0,
+    "mass": 5.6846E26,
+    "name": "saturn",
+    "parent": "sun",
+    "semimajor": 1433449370E3,
+    "start": "periapsis"
+}

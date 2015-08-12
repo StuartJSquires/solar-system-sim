@@ -1,0 +1,12 @@
+{
+    "argument_of_periapsis": 0.0,
+    "ascending_node_longitude": 0.0,
+    "direction": "CW",
+    "eccentricity": 0.00067,
+    "inclination": 0.0,
+    "mass": 4.8676E24,
+    "name": "venus",
+    "parent": "sun",
+    "semimajor": 108208000E3,
+    "start": "periapsis"
+}

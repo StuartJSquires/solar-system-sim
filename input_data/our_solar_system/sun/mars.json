@@ -1,0 +1,12 @@
+{
+    "argument_of_periapsis": 0.0,
+    "ascending_node_longitude": 0.0,
+    "direction": "CW",
+    "eccentricity": 0.0935,
+    "inclination": 0.0,
+    "mass": 4.4185E23,
+    "name": "mars",
+    "parent": "sun",
+    "semimajor": 227939100E3,
+    "start": "periapsis"
+}

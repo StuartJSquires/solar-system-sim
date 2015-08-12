@@ -1,0 +1,12 @@
+{
+    "argument_of_periapsis": 0.0,
+    "ascending_node_longitude": 0.0,
+    "direction": "CW",
+    "eccentricity": 0.205630,
+    "inclination": 0.0,
+    "mass": 3.3022E23,
+    "name": "mercury",
+    "parent": "sun",
+    "semimajor": 57909050E3,
+    "start": "periapsis"
+}
